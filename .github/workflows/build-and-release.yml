@@ -52,7 +52,7 @@ jobs:
           tag_name: ${{ env.RELEASE_TAG }}
           name: ${{ env.APP_VERSION }}${{ env.TAG_TARGET }}
           files: |
-            starter-frontend-${{ env.APP_VERSION }}.zip
+            dist/starter-frontend-${{ env.APP_VERSION }}.zip
           body: |
             Livraison automatique du frontend.
             Version : ${{ env.APP_VERSION }}
