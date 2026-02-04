@@ -1,0 +1,38 @@
+{
+	"login": {
+		"email": {
+			"item": "Adresse e-mail",
+			"placeholder": "Saisissez votre adresse e-mail"
+		},
+		"password": {
+			"item": "Mot de passe",
+			"placeholder": "Saisissez votre mot de passe"
+		},
+		"actions": {
+			"seConnecter": "Se connecter",
+			"seConnecterGoogle": "Continuer avec Google"
+		},
+		"orSection": "ou",
+		"authentificationPassword": "Authentification par e-mail/mot de passe",
+		"passwordOublie": {
+			"link": "Mot de passe oublié ?"
+		},
+		"errors": {
+			"authFailed": {
+				"title": "Échec de l'authentification",
+				"message": "Impossible de vous authentifier. Vérifiez vos informations et réessayez."
+			}
+		}
+	},
+	"logout": {
+		"actions": {
+			"seDeconnecter": "Se déconnecter"
+		}
+	},
+	"error": {
+		"message": "La page que vous recherchez n'existe pas"
+	},
+	"welcome": {
+		"message": "Bienvenue dans Starter Front"
+	}
+}

@@ -1,0 +1,7 @@
+node_modules
+package-lock.json
+.npmrc
+dist
+.DS_Store
+.env.development
+.env.production

@@ -1,0 +1,63 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'releases/rc'
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    env:
+      TARGET: ${{ github.ref_name == 'master' && 'production' || 'staging' }}
+      TAG_TARGET: ${{ github.ref_name != 'master' && '-rc' || '' }}
+
+    steps:
+      - name: Récupération du code
+        uses: actions/checkout@v4
+
+      - name: Installation de NodeJS 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Installation des dépendances
+        run: npm install
+
+      - name: Construction de l'application
+        run: npm run build
+
+      - name: Récupération de la version
+        id: GetVersion
+        run: |
+          VERSION=$(jq -r '.version' package.json)
+          echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "RELEASE_TAG=$VERSION-$(date +%y%m%d%H%M%S)${{ env.TAG_TARGET }}" >> $GITHUB_ENV
+
+      - name: Packaging de l'application
+        run: |
+          zip -r starter-frontend-${{ env.APP_VERSION }}.zip *
+        working-directory: ${{ github.workspace }}/dist
+
+      - name: Création de la Release et Upload
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          name: ${{ env.APP_VERSION }}${{ env.TAG_TARGET }}
+          files: |
+            starter-frontend-${{ env.APP_VERSION }}.zip
+          body: |
+            Livraison automatique du frontend.
+            Version : ${{ env.APP_VERSION }}
+            Cible : ${{ env.TARGET }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
