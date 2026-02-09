@@ -34,6 +34,14 @@ jobs:
 
       - name: Construction de l'application
         run: npm run build
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ var.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ var.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ var.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ var.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ var.VITE_FIREBASE_APP_ID }}
+          VITE_FIREBASE_MEASUREMENT_ID: ${{ var.VITE_FIREBASE_MEASUREMENT_ID }}
 
       - name: Récupération de la version
         id: GetVersion
@@ -44,7 +52,7 @@ jobs:
 
       - name: Packaging de l'application
         run: |
-          zip -r starter-frontend-${{ env.APP_VERSION }}.zip *
+          zip -r starter-frontend.zip *
         working-directory: ${{ github.workspace }}/dist
 
       - name: Création de la Release et Upload
@@ -53,7 +61,7 @@ jobs:
           tag_name: ${{ env.RELEASE_TAG }}
           name: ${{ env.APP_VERSION }}${{ env.TAG_TARGET }}
           files: |
-            dist/starter-frontend-${{ env.APP_VERSION }}.zip
+            dist/starter-frontend.zip
           body: |
             Livraison automatique du frontend.
             Version : ${{ env.APP_VERSION }}
