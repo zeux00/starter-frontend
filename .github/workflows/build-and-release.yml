@@ -36,6 +36,7 @@ jobs:
       - name: Construction de l'application
         run: npm run build
         env:
+          VITE_BACKEND_URL: ''
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
           VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
@@ -56,7 +57,7 @@ jobs:
           zip -r starter-frontend.zip *
         working-directory: ${{ github.workspace }}/dist
 
-      - name: Création de la Release et Upload
+      - name: Création de la release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.RELEASE_TAG }}
