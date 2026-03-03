@@ -1,23 +1,25 @@
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { Button,Loader } from '@mantine/core';
 
-import { useGetMeQuery } from '@services/auth/authApi';
-import { logout } from '@features/auth/authSlice';
-import { Button } from '@mantine/core';
+import { useMe } from '@api/authApi';
+import { useAuthStore } from '@stores/useAuthStore';
 
 const HomePage = () => {
 	//Système de traductions
 	const { t } = useTranslation();
 
-	//Dispatcher Redux
-	const dispatch = useDispatch();
+	//Déconnexion de l'utilisateur
+	const logout = useAuthStore(state => state.logout);
 
 	//Récupération des informations de l'utilisateur connecté
-	const { data: user } = useGetMeQuery(null);
+	const { data: user,isLoading,error } = useMe();
+
+	//Vérification du chargement
+	if (isLoading) return <Loader/>;
 
 	return (
 		<>
-			<Button miw="100%" onClick={ () => dispatch(logout()) }>{ t('logout.actions.seDeconnecter') }</Button>
+			<Button miw="100%" onClick={ () => logout() }>{ t('logout.actions.seDeconnecter',{ user: user?.user?.name }) }</Button>
 		</>
 	);
 };

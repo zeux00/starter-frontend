@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Box,Button,Divider,Fieldset,Flex,Grid,TextInput } from '@mantine/core';
+import { Alert,Box,Button,Divider,Fieldset,Flex,Grid,TextInput } from '@mantine/core';
 import { IconBrandGoogle } from '@tabler/icons-react';
 
 import { loginWithGoogle,loginWithPassword } from '@services/auth/authService';
